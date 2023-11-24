@@ -41,6 +41,15 @@ func main() {
 	}
 
 	target.name = os.Args[1]
+	for _, dep := range target.Deps {
+		subtarget, ok := targets[dep]
+		if !ok {
+			fmt.Printf("Invalid target: %s\n", dep)
+			os.Exit(1)
+		}
+		subtarget.name = dep
+		subtarget.run()
+	}
 	target.run()
 }
 
