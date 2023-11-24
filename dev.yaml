@@ -1,0 +1,8 @@
+dev:
+  cmd: 
+    - go build
+    - go install
+  cache: true
+  srcs:
+    - main.go
+    - dev.yaml
