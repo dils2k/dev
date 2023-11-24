@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 
 	"golang.org/x/mod/sumdb/dirhash"
 	"gopkg.in/yaml.v3"
@@ -74,17 +73,14 @@ func (t target) run() {
 	}
 
 	for _, c := range t.Cmds {
-		prog := strings.Split(c, " ")[0]
-		args := strings.Split(c, " ")[1:]
-
-		cmd := exec.Command(prog, args...)
-		output, err := cmd.Output()
+		cmd := exec.Command("/bin/sh", "-c", c)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err := cmd.Run()
 		if err != nil {
 			fmt.Printf("Target failed: %v\n", err)
 			os.Exit(1)
 		}
-
-		fmt.Print(string(output))
 	}
 
 	t.cache()
