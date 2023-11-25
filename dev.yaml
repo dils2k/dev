@@ -1,27 +1,13 @@
 dev:
   cmd: 
     - go build
+  cache: true
+  srcs:
+    - main.go
+    - dev.yaml
+
+install:
+  cmd: 
     - go install
-  srcs:
-    - main.go
-    - dev.yaml
   deps:
-    - subtask1
-    - subtask2
-
-subtask1:
-  cmd:
-    - echo '***** task 1 ******'
-  cache: true
-  srcs:
-    - main.go
-    - dev.yaml
-
-
-subtask2:
-  cmd:
-    - echo '***** task 2 ******'
-  cache: true
-  srcs:
-    - main.go
-    - dev.yaml
+    - dev
