@@ -67,12 +67,16 @@ type target struct {
 }
 
 func (t target) run() {
+	fmt.Println("--- " + t.name + " ---")
+
 	if t.isCached() {
-		fmt.Println("it's cached bro")
+		fmt.Println("using cached result...")
+		fmt.Println()
 		return
 	}
 
 	for _, c := range t.Cmds {
+		fmt.Println(c)
 		cmd := exec.Command("/bin/sh", "-c", c)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
@@ -84,6 +88,7 @@ func (t target) run() {
 	}
 
 	t.cache()
+	fmt.Println()
 }
 
 type Cache struct {
